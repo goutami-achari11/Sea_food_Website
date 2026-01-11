@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - OceanBite</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0077b6;
+            --secondary-blue: #00b4d8;
+            --accent-orange: #ff7b25;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url(assets/img/menu/w33.jpg);
+             backdrop-filter: blur(3px);
+             height: 700px;
+            -webkit-backdrop-filter: blur(3px);
+        }
+        
+        .register-container {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .register-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .register-header img {
+            height: 60px;
+            margin-bottom: 15px;
+        }
+        
+        .register-header h2 {
+            color: var(--primary-blue);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .register-header p {
+            color: #6c757d;
+        }
+        
+        .form-control {
+            height: 45px;
+            margin-bottom: 15px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 0.25rem rgba(0, 180, 216, 0.25);
+        }
+        
+        .btn-register {
+            background-color: var(--accent-orange);
+            border: none;
+            height: 45px;
+            font-weight: 600;
+            width: 100%;
+        }
+        
+        .btn-register:hover {
+            background-color: #e56b1d;
+        }
+        
+        .register-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #6c757d;
+        }
+        
+        .register-footer a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .register-footer a:hover {
+            color: var(--secondary-blue);
+        }
+        
+        .nav-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        .progress {
+            height: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        
+        .password-strength {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+        
+        #strengthText {
+            font-weight: 600;
+        }
+        
+        @media (max-width: 576px) {
+            .register-container {
+                margin: 40px 20px;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" style="background-color: #fff8f8;display: block;font-weight:bold;color:  rgb(131, 6, 6);" class="nav-back btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2" ></i> Back to Home
+        </a>
+        <div class="register-container">
+            <div class="register-header">
+                <img src="assets/img/log.png" alt="OceanBite Logo">
+                <h2>Create Your Account</h2>
+                <p style="color: rgb(177, 24, 24);font-weight: bold;font-size: 15px;">Join OceanBite to start enjoying fresh seafood delivered to your door</p>
+            </div>
+            
+            <form onsubmit="return validateFeedbackForm()" id="registerForm" action="register.php" method="POST">
+               
+                <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                            <span id="nameError" class="text-danger"></span>
+
+                            <label for="name">Name</label>
+                        </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email address" required>
+                    <label for="email">Email address</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone number">
+                    <label for="phone">Phone number (optional)</label>
+                </div>
+                
+                <div class="form-floating mb-3 password-container">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                    <label for="password">Password</label>
+                    <span class="password-toggle" id="togglePassword">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+                
+                <div class="progress">
+                    <div class="progress-bar" id="passwordStrength" role="progressbar"></div>
+                </div>
+                <div class="password-strength">
+                    Password strength: <span id="strengthText">Weak</span>
+                </div>
+                
+                <div class="form-floating mb-3 password-container">
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+                    <label for="confirmPassword">Confirm Password</label>
+                    <span class="password-toggle" id="toggleConfirmPassword">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+                
+               
+                
+                <button type="submit" class="btn btn-register" name="btnsubmit">Create Account</button>
+                
+                <div class="register-footer">
+                    Already have an account? <a href="login.html">Sign in</a>
+                </div>
+            </form>
+        </div>
+    </div>
+<script>
+    function isValidName(name) {
+      const regex = /^[A-Za-z\s]+$/;
+      return regex.test(name);
+    }
+
+    function validateFeedbackForm() {
+      const name = document.getElementById("name").value.trim();
+      const error = document.getElementById("nameError");
+
+      if (!isValidName(name)) {
+        error.textContent = "Name must contain only letters and spaces.";
+        return false;
+      }
+
+      error.textContent = "";
+      return true;
+    }
+  </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Password toggle visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const icon = this.querySelector('i');
+            
+            if (confirmPasswordInput.type === 'password') {
+                confirmPasswordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                confirmPasswordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        // Password strength meter
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthBar = document.getElementById('passwordStrength');
+            const strengthText = document.getElementById('strengthText');
+            
+            // Reset
+            strengthBar.style.width = '0%';
+            strengthBar.removeAttribute('class');
+            strengthBar.classList.add('progress-bar');
+            
+            if (password.length === 0) {
+                strengthText.textContent = '';
+                return;
+            }
+            
+            // Calculate strength
+            let strength = 0;
+            
+            // Length
+            if (password.length > 7) strength += 20;
+            if (password.length > 10) strength += 20;
+            
+            // Complexity
+            if (/[A-Z]/.test(password)) strength += 20;
+            if (/\d/.test(password)) strength += 20;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 20;
+            
+            // Cap at 100
+            strength = Math.min(strength, 100);
+            
+            strengthBar.style.width = strength + '%';
+            
+            // Update color and text
+            if (strength < 40) {
+                strengthBar.classList.add('bg-danger');
+                strengthText.textContent = 'Weak';
+            } else if (strength < 70) {
+                strengthBar.classList.add('bg-warning');
+                strengthText.textContent = 'Medium';
+            } else {
+                strengthBar.classList.add('bg-success');
+                strengthText.textContent = 'Strong';
+            }
+        });
+        
+        // Form validation
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const termsChecked = document.getElementById('terms').checked;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match');
+                return;
+            }
+            
+            if (!termsChecked) {
+                e.preventDefault();
+                alert('You must agree to the terms and conditions');
+                return;
+            }
+        });
+    </script>
+</body>
+</html>
+
